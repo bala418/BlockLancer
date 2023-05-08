@@ -1,4 +1,3 @@
-// get url params and display the data
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -6,20 +5,47 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 const IndividualAuction = () => {
   const { user } = useAuthContext();
-  const [auction, setAuction] = useState({});
   const { id } = useParams();
-  console.log("user:", user);
+  const [auction, setAuction] = useState({});
+  const [canBid, setCanBid] = useState(false);
+
   useEffect(() => {
     const fetchAuction = async () => {
       const res = await axios.get(`/api/auction/${id}`);
       setAuction(res.data);
-      console.log("auction:", auction);
     };
     fetchAuction();
-  }, [id, auction]);
+  }, [id]);
 
-  // if user.email === auction.mail, then show the close button
-  // if user.email !== auction.mail, then show the bid button
+  useEffect(() => {
+    const checkCanBid = () => {
+      if (auction.mail === user.email) {
+        setCanBid(false);
+      }
+      if (auction.bidders) {
+        auction.bidders.forEach((bid) => {
+          if (bid.mail === user.email) {
+            setCanBid(false);
+          }
+        });
+      }
+      if (auction.mail !== user.email) {
+        setCanBid(true);
+      }
+    };
+    checkCanBid();
+  }, [auction, user.email]);
+
+  console.log("This is the auction");
+  console.log(auction);
+  console.log(user.email);
+  console.log(auction.mail);
+  console.log(auction.bidders);
+
+  const handleBid = async () => {
+    // handle bid submission
+    console.log("bid submitted");
+  };
 
   return (
     <div>
@@ -35,17 +61,13 @@ const IndividualAuction = () => {
       <p>Posted on: {auction.createdAt}</p>
       <p>Updated on: {auction.updatedAt}</p>
 
-      {/* if user.email === auction.mail, then show the close button */}
-      {/* if user.email !== auction.mail, then show the bid button */}
-      {/* {user.email === auction.mail && (
+      {user.email === auction.mail && (
         <button onClick={() => console.log("close auction")}>Close</button>
       )}
-      {user.email !== auction.mail && (
-        <button onClick={() => console.log("bid on auction")}>Bid</button>
-      )} */}
+
+      {canBid && <button onClick={handleBid}>Bid</button>}
 
       <h2>Bids</h2>
-      {/* for loop to display the array */}
       {auction.bidders &&
         auction.bidders.map((bid) => (
           <div key={bid._id}>
