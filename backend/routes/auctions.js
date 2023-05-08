@@ -6,6 +6,7 @@ const {
   getAuction,
   bidAuction,
   closeAuction,
+  getMyAuctions,
 } = require("../controllers/auctionController");
 // const requireAuth = require("../middleware/requireAuth");
 
@@ -13,6 +14,9 @@ const {
 
 // get auctions
 router.get("/", getAllAuctions);
+
+// view my auctions
+router.get("/myauctions/:email", getMyAuctions);
 
 // get a single auction
 router.get("/:id", getAuction);
