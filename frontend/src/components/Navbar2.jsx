@@ -11,9 +11,9 @@ const Navbar2 = () => {
         <li>
           <Link to="/createAuction">Create Auction</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/individualAuction">Individual Auction</Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/myAuctions">My Auction</Link>
         </li>

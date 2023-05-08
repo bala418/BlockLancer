@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const AllAuctions = () => {
   const [auctions, setAuctions] = useState([]);
@@ -11,6 +12,12 @@ const AllAuctions = () => {
     };
     fetchAuctions();
   }, []);
+
+  const viewAuction = () => {
+    // go to the individual auction page
+    // history.push(`/auctions/${id}`);
+    // console.log(`Viewing auction with ID ${id}`);
+  };
 
   return (
     <div>
@@ -25,11 +32,7 @@ const AllAuctions = () => {
             {/* exp required and availability */}
             <p>Experience Required: {auction.jobExpRequired}</p>
             <p>Availability: {auction.available}</p>
-            <p>Posted By: {auction.mail}</p>
-            <button>Bid</button>
-            <input type="number" name="" id="" />
-            <button>View Bids</button>
-            <button>Close</button>
+            <Link to={`/auctions/${auction._id}`}>View</Link>
           </li>
         ))}
       </ul>
