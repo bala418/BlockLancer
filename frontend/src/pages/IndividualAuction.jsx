@@ -61,6 +61,15 @@ const IndividualAuction = () => {
     console.log("bid submitted");
   };
 
+  const handleAccept = async (e) => {
+    // handle bid acceptance
+    const bidId = e.target.value;
+    const res = await axios.patch(`/api/auction/accept/${id}/${bidId}`);
+    setAuction(res.data);
+    console.log("bid accepted");
+    console.log(e.target.value);
+  };
+
   return (
     <div>
       <h1>{auction.jobTitle}</h1>
@@ -97,6 +106,10 @@ const IndividualAuction = () => {
             <p>Amount: {bid.bidAmount}</p>
             <p>Bidded by: {bid.mail}</p>
             <p>Bid Status: {bid.gotBid}</p>
+            {/* button when clicked calls an eventHandler handleAccept */}
+            <button onClick={handleAccept} value={bid._id}>
+              Accept
+            </button>
           </div>
         ))}
     </div>

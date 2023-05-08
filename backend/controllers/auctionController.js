@@ -134,6 +134,33 @@ const getMyBids = async (req, res) => {
   }
 };
 
+// accept a bid
+const acceptBid = async (req, res) => {
+  const auctionId = req.params.id;
+  const bidId = req.params.bidid;
+
+  console.log(auctionId, bidId);
+
+  try {
+    let auctions = await Auction.findOneAndUpdate(
+      { _id: auctionId, "bidders._id": bidId },
+      { $set: { "bidders.$.gotBid": "accepted" } },
+      { new: true }
+    );
+    // update the auction with that id to be closed
+
+    auctions = await Auction.findOneAndUpdate(
+      { _id: auctionId },
+      { $set: { available: "no" } },
+      { new: true }
+    );
+
+    res.status(200).json(auctions);
+  } catch (err) {
+    res.json({ message: err });
+  }
+};
+
 // update a workout
 const closeAuction = async (req, res) => {
   res.status(200).json({ message: "Close successful" });
@@ -146,4 +173,5 @@ module.exports = {
   closeAuction,
   getMyAuctions,
   getMyBids,
+  acceptBid,
 };

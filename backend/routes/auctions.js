@@ -8,6 +8,7 @@ const {
   closeAuction,
   getMyAuctions,
   getMyBids,
+  acceptBid,
 } = require("../controllers/auctionController");
 // const requireAuth = require("../middleware/requireAuth");
 
@@ -15,6 +16,9 @@ const {
 
 // get auctions
 router.get("/", getAllAuctions);
+
+// accept a bid
+router.patch("/accept/:id/:bidid", acceptBid);
 
 // view my auctions
 router.get("/myauctions/:email", getMyAuctions);
