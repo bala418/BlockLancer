@@ -9,6 +9,7 @@ const IndividualAuction = () => {
   const [auction, setAuction] = useState({});
   const [canBid, setCanBid] = useState(true);
   const [bidAmount, setBidAmount] = useState(0);
+  const [canAccept, setCanAccept] = useState(true);
 
   useEffect(() => {
     const fetchAuction = async () => {
@@ -17,6 +18,25 @@ const IndividualAuction = () => {
     };
     fetchAuction();
   }, [id]);
+
+  useEffect(() => {
+    const checkCanAccept = () => {
+      let cond1 = true,
+        cond2 = true;
+      if (auction.available === "no") {
+        cond1 = false;
+      }
+      if (auction.mail !== user.email) {
+        cond2 = false;
+      }
+      if (cond1 && cond2) {
+        setCanAccept(true);
+      } else {
+        setCanAccept(false);
+      }
+    };
+    checkCanAccept();
+  }, [auction, user.email]);
 
   useEffect(() => {
     const checkCanBid = () => {
@@ -33,8 +53,13 @@ const IndividualAuction = () => {
           }
         });
       }
+
+      if (auction.available === "no") {
+        cond3 = false;
+      }
+
       // if either one is false, then can't bid
-      if (cond1 && cond2) {
+      if (cond1 && cond2 && cond3) {
         setCanBid(true);
       } else {
         setCanBid(false);
@@ -107,9 +132,12 @@ const IndividualAuction = () => {
             <p>Bidded by: {bid.mail}</p>
             <p>Bid Status: {bid.gotBid}</p>
             {/* button when clicked calls an eventHandler handleAccept */}
-            <button onClick={handleAccept} value={bid._id}>
-              Accept
-            </button>
+            {/* button accept if auction.available ==="yes" and user.email = auction.mail*/}
+            {canAccept && (
+              <button value={bid._id} onClick={handleAccept}>
+                Accept
+              </button>
+            )}
           </div>
         ))}
     </div>
