@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const auctionRouter = require("./routes/auctions");
+const auctionRoutes = require("./routes/auctions");
 const userRoutes = require("./routes/user");
 // express app
 const app = express();
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 });
 
 // use the routes only when the following path is hit
-app.use("/api/auction", auctionRouter);
+app.use("/api/auction", auctionRoutes);
 app.use("/api/user", userRoutes);
 
 // connect to the database
