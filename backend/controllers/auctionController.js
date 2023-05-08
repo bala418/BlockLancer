@@ -118,6 +118,22 @@ const getMyAuctions = async (req, res) => {
   }
 };
 
+// get all bids from 1 mail
+const getMyBids = async (req, res) => {
+  // get mail from url
+  const email = req.params.email;
+  console.log(email);
+
+  try {
+    const auctions = await Auction.find({ "bidders.mail": email }).sort({
+      createdAt: -1,
+    });
+    res.status(200).json(auctions);
+  } catch (err) {
+    res.json({ message: err });
+  }
+};
+
 // update a workout
 const closeAuction = async (req, res) => {
   res.status(200).json({ message: "Close successful" });
@@ -129,4 +145,5 @@ module.exports = {
   bidAuction,
   closeAuction,
   getMyAuctions,
+  getMyBids,
 };
