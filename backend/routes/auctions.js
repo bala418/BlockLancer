@@ -21,9 +21,9 @@ router.get("/:id", getAuction);
 router.post("/", createAuction);
 
 // bid for an auction
-router.patch("/bid:id", bidAuction);
+router.patch("/bid/:id", bidAuction);
 
 // close an auction
-router.patch("/close:id", closeAuction);
+router.patch("/close/:id", closeAuction);
 
 module.exports = router;

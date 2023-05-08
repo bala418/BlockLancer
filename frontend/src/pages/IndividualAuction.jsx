@@ -13,9 +13,10 @@ const IndividualAuction = () => {
     const fetchAuction = async () => {
       const res = await axios.get(`/api/auction/${id}`);
       setAuction(res.data);
+      console.log("auction:", auction);
     };
     fetchAuction();
-  }, [id]);
+  }, [id, auction]);
 
   // if user.email === auction.mail, then show the close button
   // if user.email !== auction.mail, then show the bid button
@@ -36,12 +37,23 @@ const IndividualAuction = () => {
 
       {/* if user.email === auction.mail, then show the close button */}
       {/* if user.email !== auction.mail, then show the bid button */}
-      {user.email === auction.mail && (
+      {/* {user.email === auction.mail && (
         <button onClick={() => console.log("close auction")}>Close</button>
       )}
       {user.email !== auction.mail && (
         <button onClick={() => console.log("bid on auction")}>Bid</button>
-      )}
+      )} */}
+
+      <h2>Bids</h2>
+      {/* for loop to display the array */}
+      {auction.bidders &&
+        auction.bidders.map((bid) => (
+          <div key={bid._id}>
+            <p>Amount: {bid.bidAmount}</p>
+            <p>Bidded by: {bid.mail}</p>
+            <p>Bid Status: {bid.gotBid}</p>
+          </div>
+        ))}
     </div>
   );
 };

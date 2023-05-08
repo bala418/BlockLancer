@@ -65,10 +65,41 @@ const createAuction = async (req, res) => {
   }
 };
 
-// delete a workout
+// bid auction
 const bidAuction = async (req, res) => {
-  //   simply send bid json for testing
-  res.status(200).json({ message: "Bid successful" });
+  const auctionId = req.params.id;
+  const { email, bidAmount } = req.body;
+  console.log(email, bidAmount);
+
+  try {
+    const auction = await Auction.findById(auctionId);
+
+    if (!auction) {
+      return res.status(404).json({ message: "Auction not found" });
+    }
+
+    // if (auction.baseAmount >= bidAmount) {
+    //   return res.status(400).json({ message: "Bid amount is too low" });
+    // }
+
+    const newBid = {
+      mail: email,
+      bidAmount,
+      gotBid: "yes",
+    };
+
+    console.log(newBid);
+
+    auction.bidders.push(newBid);
+
+    console.log(auction);
+    // auction.available = "no";
+    await auction.save();
+
+    res.status(200).json(auction);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 };
 
 // update a workout
