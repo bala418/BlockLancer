@@ -8,6 +8,7 @@ const IndividualAuction = () => {
   const { id } = useParams();
   const [auction, setAuction] = useState({});
   const [canBid, setCanBid] = useState(false);
+  const [bidAmount, setBidAmount] = useState(0);
 
   useEffect(() => {
     const fetchAuction = async () => {
@@ -44,6 +45,13 @@ const IndividualAuction = () => {
 
   const handleBid = async () => {
     // handle bid submission
+    const bid = {
+      bidAmount: bidAmount,
+      email: user.email,
+    };
+    const res = await axios.patch(`/api/auction/bid/${id}/`, bid);
+    setAuction(res.data);
+
     console.log("bid submitted");
   };
 
@@ -65,7 +73,16 @@ const IndividualAuction = () => {
         <button onClick={() => console.log("close auction")}>Close</button>
       )}
 
-      {canBid && <button onClick={handleBid}>Bid</button>}
+      {canBid && (
+        <div>
+          <button onClick={handleBid}>Bid</button>
+          <input
+            type="number"
+            value={bidAmount}
+            onChange={(e) => setBidAmount(e.target.value)}
+          />
+        </div>
+      )}
 
       <h2>Bids</h2>
       {auction.bidders &&
