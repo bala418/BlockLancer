@@ -7,7 +7,7 @@ const IndividualAuction = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
   const [auction, setAuction] = useState({});
-  const [canBid, setCanBid] = useState(false);
+  const [canBid, setCanBid] = useState(true);
   const [bidAmount, setBidAmount] = useState(0);
 
   useEffect(() => {
@@ -20,18 +20,24 @@ const IndividualAuction = () => {
 
   useEffect(() => {
     const checkCanBid = () => {
+      let cond1 = true,
+        cond2 = true,
+        cond3 = true;
       if (auction.mail === user.email) {
-        setCanBid(false);
+        cond1 = false;
       }
       if (auction.bidders) {
         auction.bidders.forEach((bid) => {
           if (bid.mail === user.email) {
-            setCanBid(false);
+            cond2 = false;
           }
         });
       }
-      if (auction.mail !== user.email) {
+      // if either one is false, then can't bid
+      if (cond1 && cond2) {
         setCanBid(true);
+      } else {
+        setCanBid(false);
       }
     };
     checkCanBid();
