@@ -13,12 +13,6 @@ const AllAuctions = () => {
     fetchAuctions();
   }, []);
 
-  const viewAuction = () => {
-    // go to the individual auction page
-    // history.push(`/auctions/${id}`);
-    // console.log(`Viewing auction with ID ${id}`);
-  };
-
   return (
     <div>
       <h1>All Jobs:</h1>
