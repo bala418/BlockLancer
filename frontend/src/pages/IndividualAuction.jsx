@@ -10,6 +10,7 @@ const IndividualAuction = () => {
   const [canBid, setCanBid] = useState(true);
   const [bidAmount, setBidAmount] = useState(0);
   const [canAccept, setCanAccept] = useState(true);
+  const [canClose, setCanClose] = useState(true);
 
   useEffect(() => {
     const fetchAuction = async () => {
@@ -20,10 +21,33 @@ const IndividualAuction = () => {
   }, [id]);
 
   useEffect(() => {
+    const checkCanClose = () => {
+      let cond1 = true,
+        cond2 = true,
+        cond3 = true;
+      if (auction.available === "no") {
+        cond1 = false;
+      }
+      if (auction.mail !== user.email) {
+        cond2 = false;
+      }
+      if (auction.available === "withdrawn") {
+        cond3 = false;
+      }
+      if (cond1 && cond2 && cond3) {
+        setCanClose(true);
+      } else {
+        setCanClose(false);
+      }
+    };
+    checkCanClose();
+  });
+
+  useEffect(() => {
     const checkCanAccept = () => {
       let cond1 = true,
         cond2 = true;
-      if (auction.available === "no") {
+      if (auction.available === "no" || auction.available === "withdrawn") {
         cond1 = false;
       }
       if (auction.mail !== user.email) {
@@ -95,6 +119,13 @@ const IndividualAuction = () => {
     console.log(e.target.value);
   };
 
+  const handleClose = async () => {
+    // handle auction closure
+    const res = await axios.patch(`/api/auction/close/${id}`);
+    setAuction(res.data);
+    console.log("auction closed");
+  };
+
   return (
     <div>
       <h1>{auction.jobTitle}</h1>
@@ -109,9 +140,7 @@ const IndividualAuction = () => {
       <p>Posted on: {auction.createdAt}</p>
       <p>Updated on: {auction.updatedAt}</p>
 
-      {user.email === auction.mail && (
-        <button onClick={() => console.log("close auction")}>Close</button>
-      )}
+      {canClose && <button onClick={handleClose}>Close</button>}
 
       {canBid && (
         <div>
@@ -131,8 +160,6 @@ const IndividualAuction = () => {
             <p>Amount: {bid.bidAmount}</p>
             <p>Bidded by: {bid.mail}</p>
             <p>Bid Status: {bid.gotBid}</p>
-            {/* button when clicked calls an eventHandler handleAccept */}
-            {/* button accept if auction.available ==="yes" and user.email = auction.mail*/}
             {canAccept && (
               <button value={bid._id} onClick={handleAccept}>
                 Accept

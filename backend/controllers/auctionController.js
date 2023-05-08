@@ -163,7 +163,17 @@ const acceptBid = async (req, res) => {
 
 // update a workout
 const closeAuction = async (req, res) => {
-  res.status(200).json({ message: "Close successful" });
+  const { id } = req.params;
+  try {
+    let auctions = await Auction.findOneAndUpdate(
+      { _id: id },
+      { $set: { available: "withdrawn" } },
+      { new: true }
+    );
+    res.status(200).json(auctions);
+  } catch (err) {
+    res.json({ message: err });
+  }
 };
 module.exports = {
   getAllAuctions,
