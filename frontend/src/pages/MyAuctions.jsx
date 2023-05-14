@@ -38,6 +38,8 @@ const MyAuctions = () => {
             </Link>
           </li>
         ))}
+        {/* if no auctions found print No auctiosn found */}
+        {auctions.length === 0 && <h3>No auctions found</h3>}
       </ul>
     </div>
   );

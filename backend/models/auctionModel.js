@@ -43,6 +43,9 @@ const auctionSchema = new mongoose.Schema(
         },
       },
     ],
+    blockChainAddress:{
+      type: String,
+    }
   },
   { timestamps: true }
 );

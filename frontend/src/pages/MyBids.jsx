@@ -38,6 +38,7 @@ const MyBids = () => {
             </Link>
           </li>
         ))}
+        {auctions.length === 0 && <h3>No auctions found</h3>}
       </ul>
     </div>
   );

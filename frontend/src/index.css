@@ -335,9 +335,17 @@ h1 {
   color: #007bff;
 }
 
-.bca{
-  background: linear-gradient(to right, #FF416C, #FF4B2B);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.bca {
+  background-color: #F6CECE;
+  color: #6E2C00;
+  border-radius: 5px;
+  padding: 2px 5px;
   font-weight: bold;
+  font-size: 1.1em;
+}
+
+.bca2{
+  border: 2px solid red;
+  background-color: #ffcccc;
+  font-size: 1.2em;
 }

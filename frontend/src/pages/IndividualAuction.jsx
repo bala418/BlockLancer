@@ -129,7 +129,6 @@ const IndividualAuction = () => {
   return (
     <div>
       <h1>{auction.jobTitle}</h1>
-      <h3>{user.email}</h3>
       <p>Job Description:{auction.jobDescription}</p>
       <p>Location: {auction.jobLocation}</p>
       <p>Base Amount: {auction.baseAmount}</p>
@@ -137,6 +136,7 @@ const IndividualAuction = () => {
       <p>Experience Required: {auction.jobExpRequired}</p>
       <p>Availability: {auction.available}</p>
       <p>Posted by: {auction.mail}</p>
+      <p className="bca2">BlockChain Address: {auction.blockChainAddress}</p>
       <p>Posted on: {auction.createdAt}</p>
       <p>Updated on: {auction.updatedAt}</p>
 

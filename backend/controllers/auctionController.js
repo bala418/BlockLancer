@@ -1,4 +1,5 @@
 const Auction = require("../models/auctionModel");
+const User = require("../models/userModel");
 const mongoose = require("mongoose");
 
 // get all auctions
@@ -23,6 +24,13 @@ const getAuction = async (req, res) => {
     }
 
     const auction = await Auction.findById(id);
+    const mail = auction.mail;
+    // console.log(mail);
+    const user = await User.findOne({ email: mail });
+    // console.log(user);
+    auction.blockChainAddress = user.blockChainAddress;
+    console.log(auction);
+
     if (!auction) {
       return res.status(404).json({ message: "Auction not found" });
     } else {
