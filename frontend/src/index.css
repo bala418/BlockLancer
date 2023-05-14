@@ -334,3 +334,10 @@ h1 {
   text-align: right;
   color: #007bff;
 }
+
+.bca{
+  background: linear-gradient(to right, #FF416C, #FF4B2B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}

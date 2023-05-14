@@ -10,16 +10,17 @@ const createToken = (_id) => {
 // login a user
 
 const loginUser = async (req, res) => {
-  const { email, password, blockChainAddress } = req.body;
+  const { email, password } = req.body;
 
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
-    console.log("User logged in", user, blockChainAddress);
-    res.status(200).json({ email, token, blockChainAddress });
+
+    res
+      .status(200)
+      .json({ email, token, blockChainAddress: user.blockChainAddress });
   } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ error: err.message });
   }
 };
 
