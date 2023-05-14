@@ -18,19 +18,24 @@ const MyAuctions = () => {
   }, [email]);
 
   return (
-    <div>
-      <h1>My Jobs:</h1>
-      <ul>
+    <div class="job-listings-container">
+      <h1>My Auctions:</h1>
+      <ul class="job-listings">
         {auctions.map((auction) => (
-          <li key={auction._id}>
-            <h2>{auction.jobTitle}</h2>
-            <p>{auction.jobDescription}</p>
-            <p>Location: {auction.jobLocation}</p>
-            <p>Base Amount: {auction.baseAmount}</p>
-            {/* exp required and availability */}
-            <p>Experience Required: {auction.jobExpRequired}</p>
-            <p>Availability: {auction.available}</p>
-            <Link to={`/auctions/${auction._id}`}>View</Link>
+          <li class="job-listing" key={auction._id}>
+            <div class="job-title">{auction.jobTitle}</div>
+            <div class="job-description">{auction.jobDescription}</div>
+            <div class="job-location">Location: {auction.jobLocation}</div>
+            <div class="job-amount">Base Amount: {auction.baseAmount}</div>
+            <div class="job-exp">
+              Experience Required: {auction.jobExpRequired}
+            </div>
+            <div class="job-availability">
+              Availability: {auction.available}
+            </div>
+            <Link to={`/auctions/${auction._id}`} class="job-view-link">
+              View
+            </Link>
           </li>
         ))}
       </ul>

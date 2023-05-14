@@ -11,6 +11,11 @@ import IndividualAuction from "./pages/IndividualAuction";
 import MyAuctions from "./pages/MyAuctions";
 import MyBids from "./pages/MyBids";
 
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Blogs from "./pages/Blogs";
+import Contact from "./pages/Contact";
+
 // components
 import Navbar from "./components/Navbar";
 
@@ -54,7 +59,10 @@ function App() {
             <Route path="/auctions/:id" element={<IndividualAuction />}></Route>
             <Route path="/myAuctions" element={<MyAuctions />}></Route>
             <Route path="/myBids" element={<MyBids />}></Route>
-
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/services" element={<Services />}></Route>
+            <Route path="/blogs" element={<Blogs />}></Route>
+            <Route path="/contact" element={<Contact />}></Route>
             <Route path="*" element={<h1>Invalid Route</h1>}></Route>
           </Routes>
         </div>
