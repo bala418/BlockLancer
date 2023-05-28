@@ -18,7 +18,7 @@ const Navbar2 = () => {
           <Link to="/myBids">My Bids</Link>
         </li>
         <li>
-          <a href="https://www.google.com">Google / The Chat App</a>
+          <a href="http://127.0.0.1:3001/">Chat</a>
         </li>
       </ul>
     </div>

@@ -415,7 +415,7 @@ class Chat extends Component {
                         </div>
                     </div>
                     <div class="col-5 right-block">
-                        <h3>Blockchain state</h3>
+                        <h3>Blocklancer Chat</h3>
                         <p>Number of blocks: { this.state.nbBlocks }</p>
                         <p>Last transaction gas: { this.state.lastGas }</p>
                         <div class="sender-block blockchain-block">
